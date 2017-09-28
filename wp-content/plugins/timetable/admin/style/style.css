@@ -1,0 +1,255 @@
+/* --- events hours list --- */
+#event_hours_list
+{
+	background-color: #FFFFFF;
+    border: 1px solid #DFDFDF;
+	padding: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+}
+#event_hours_list li
+{
+	margin: 0 15px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+	border-bottom: 1px solid #DFDFDF;
+}
+#event_hours_list li:first-child
+{
+	margin-top: 0;
+}
+#event_hours_list .operation_button
+{
+	float: right;
+	cursor: pointer;
+	margin-top: 3px;
+	margin-left: 10px;
+}
+.rtl #event_hours_list .operation_button 
+{
+	float: left;
+	margin-left: 0;
+	margin-right: 10px;
+}
+#event_hours_list .edit_hour_event_loader
+{
+	cursor: default;
+	display: none;
+	margin-top: 0;
+}
+#event_hours_table textarea
+{
+	width: 250px;
+}
+/* --- timetable settings --- */
+#wpbody-content .wrap.timetable_settings_section
+{
+	margin: 50px 0 0 0;
+}
+#wpbody-content .wrap.timetable_settings_section.first
+{
+	margin: 15px 0 0 0;
+}
+#wpbody-content .wrap.timetable_settings_section h2
+{
+	margin: 0 0 20px 0;
+	padding: 0;
+}
+#timetable_settings .spinner 
+{
+    float: none;
+    margin: -4px 3px;
+}
+#timetable_settings .color,
+#event_config .color,
+.widget-content .color
+{
+	width: 70px;
+}
+#timetable_settings .color_preview,
+#event_config .color_preview,
+.widget-content .color_preview
+{
+	display: block;
+	float: left;
+	width: 25px;
+	height: 25px;
+	margin: 1px 5px 1px 1px;
+	background: transparent;
+	border: 1px solid #E0E0E0;
+}
+.rtl #timetable_settings .color_preview,
+.rtl #event_config .color_preview,
+.rtl .widget-content .color_preview
+{
+	float: right;
+	margin: 1px 1px 1px 5px;
+}
+.widget-content .color_preview 
+{
+    display: inline-block;
+    float: none;
+    margin: 1px;
+    vertical-align: top;
+}
+.timetable_shortcode_container .copy_info
+{
+	display: none;
+}
+#timetable_settings,
+#timetable_events_settings,
+#timetable_shortcodes
+{
+	margin: 0;
+}
+#timetable_settings .form-table tr:first-child th, 
+#timetable_settings .form-table tr:first-child td 
+{
+    padding-top: 0;
+}
+#timetable_configuration_tabs,
+#timetable_events_settings div,
+#timetable_shortcodes div
+{
+	width: 830px;
+	margin-top: 20px;
+}
+#timetable_settings tr
+{
+	border-bottom: 1px solid #EFEFEF;
+}
+#timetable_settings th,
+#timetable_settings td
+{
+	vertical-align: middle;
+}
+#timetable_settings .form-table .header_row
+{
+	text-align: center;
+	padding-right: 0;
+}
+.rtl #timetable_settings .form-table .header_row 
+{
+	padding-left: 0;
+}
+#timetable_settings .description
+{
+	display: block;
+    margin-left: 20px;
+    width: 300px;
+}
+.rtl #timetable_settings .description 
+{
+	margin-left: 0;
+	margin-right: 20px;
+}
+#timetable_settings  select,
+#timetable_settings .regular-text
+{
+	width: 200px;
+}
+#timetable_shortcodes select,
+#timetable_shortcodes input
+{
+	width: 255px;
+}
+#timetable_shortcodes div,
+#timetable_events_settings div
+{
+	margin: 0;
+}
+.fontSubsetRow
+{
+	display: none;
+}
+.tt_hide
+{
+	display: none;
+}
+#timetable_configuration_tabs .ui-tabs-panel,
+.timetable_shortcode_container
+{
+	clear: both;
+	box-shadow: 0 2px 0 rgba(0, 0, 0, 0.05);
+	background: #FFF;
+	padding: 20px 30px;
+}
+.timetable_shortcode_container
+{
+	width: 770px;
+	margin-top: 20px;
+}
+#timetable_configuration_tabs .ui-tabs-nav
+{
+	margin: 0;
+	background: #555555;
+    clear: both;
+    float: left;
+    width: 100%;
+}
+.rtl #timetable_configuration_tabs .ui-tabs-nav 
+{
+	float: right;
+}
+#timetable_configuration_tabs .ui-tabs-nav li
+{
+	padding: 0;
+	margin: 0;
+	border: none;
+	display: block;
+	float: left;
+}
+.rtl #timetable_configuration_tabs .ui-tabs-nav li 
+{
+	float: right;
+}
+#timetable_configuration_tabs .ui-tabs-nav li a
+{
+	display: block;
+	background: #333;
+	color: #EEE;
+	text-decoration: none;
+	padding: 15px 20px;
+	outline: none;
+	font-size: 14px;
+}
+#timetable_configuration_tabs .ui-tabs-nav li a:hover
+{
+	background: #111;
+	color: #2EA2CC;
+}
+#timetable_configuration_tabs .ui-tabs-nav .ui-tabs-active a,
+#timetable_configuration_tabs .ui-tabs-nav .ui-tabs-active a:hover
+{
+	background: #0074A2;
+	color: #FFF;
+}
+#shortcode_info
+{
+	display: none;
+	margin: 5px 0;
+	padding: 5px;
+}
+#dummy_content_tick,
+#event_slug_tick,
+#shortcode_tick
+{
+	display: none;
+	margin-top: 5px;
+}
+/* --- admin menu --- */
+#adminmenu #menu-posts-timetable_weekdays .menu-icon-post div.wp-menu-image:before
+{
+	content: "\f145";
+}
+#adminmenu #menu-posts-events .menu-icon-post div.wp-menu-image:before
+{
+	content: "\f157";
+}
+/* --- visual composer --- */
+.icon-wpb-layer-timetable,
+.wpb_tt_timetable .wpb_element_wrapper .vc_element-icon
+{
+	background-image: url("../images/timetable.png");
+}
