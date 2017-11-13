@@ -38,7 +38,7 @@
                 @include('modal', ['index' => $index, 'project' => $project])
             @else
                 <?php
-                $spot = 0;
+                $spot = 1;
                 $endTime = strtotime('+10 minutes', strtotime($selectedTime));
                 $selectedTime = date('h:i', $endTime);
                 ?>
