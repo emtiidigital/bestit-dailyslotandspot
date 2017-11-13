@@ -1,1 +1,0 @@
-## About Daily Slot and Spot
