@@ -5,49 +5,83 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <!-- bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
 </head>
 <body>
 
 <div class="content">
-    <form action="{{ url('/addWorker') }}" method="post">
-        {{ csrf_field() }}
-        Worker name: <input type="text" name="workerName"><br><br>
-        project name: <input type="text" name="projectName"><br><br>
-        <input type="submit" value="Create Project">
-    </form>
+    @if (!$errors->loginErrors->isEmpty())
+        <div class="text-danger">
+            <strong>Whoops!</strong> There were some problems with your input.<br><br>
+            <ul>
+                @foreach ($errors->loginErrors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    <div class="row border justify-content-center mtop">
+        <div class="mtop col-4">
+            <form action="{{ url('/addWorker') }}" method="post">
+                {{ csrf_field() }}
+                Worker name: <input type="text" name="workerName"><br><br>
+                Worker email: <input type="text" name="workerEmail"><br><br>
+                <input class="btn btn-primary" type="submit" value="add new Worker">
+            </form>
+        </div>
+        <div class="mtop col-4">
+            <form action="{{ url('/addProject') }}" method="post">
+                {{ csrf_field() }}
+                project name:
+                <input type="text" name="projectName"><br><br>
+                <input class="btn btn-primary" type="submit" value="Create Project">
+            </form>
+        </div>
+    </div>
 
     <br>
-    @foreach (\App\Project::all() as $project)
-        <div style="float: left; margin-left: 40px">
-            <h1>{{$project->name}}
-                <a href="{{ url('project/'.$project->id.'/delete') }}">
-                    <span class="glyphicon glyphicon-remove text-danger"></span>
-                </a>
-            </h1>
+    <div class="row">
+        @foreach (\App\Project::all() as $project)
+            <div class="project-box container column">
+                <div class="row justify-content-around">
+                    <h1>
+                        <a href="{{ url('project/'.$project->id.'/delete') }}">
+                            <span class=" glyphicon glyphicon-trash text-danger"></span>
+                        </a>
+                        {{$project->name}}
+                    </h1>
+                    <form method="Post" action="{{ url($project->id.'/addWorker') }}">
+                        {{ csrf_field() }}
 
-            <form method="Post" action="{{ url($project->id.'/addWorker') }}">
-                {{ csrf_field() }}
-                <input type="text" name="workerName">
-                <button class="btn btn-primary" type="submit"> add worker</button>
+                        <select class="custom-select" name="workerName">
+                            <option value="undefind">choose worker</option>
+                            @foreach($workers as $worker)
 
-            </form>
+                                <option value="{{$worker->id}}">{{$worker->name}}</option>
+                            @endforeach
+                        </select>
 
-            @foreach($project->workers as $worker)
+                        <button class="btn btn-primary" type="submit"> add worker</button>
 
-                <div>{{$worker->name}}
-                    <a href="{{ url('worker/'.$worker->id.'/delete') }}">
-                        <span class="glyphicon glyphicon-remove text-danger"></span>
-                    </a>
+                    </form>
                 </div>
 
-            @endforeach
-        </div>
-    @endforeach
+                @foreach($project->workers as $worker)
+                    <div>
+                        {{$worker->name}}
+                        <a href="{{ url($project->id.'/deleteWorker/'.$worker->id) }}">
+                            <span class="badge badge-default badge-pill">x</span>
+                        </a>
+                    </div>
+                @endforeach
 
+            </div>
+        @endforeach
+    </div>
 </div>
 </body>
 </html>

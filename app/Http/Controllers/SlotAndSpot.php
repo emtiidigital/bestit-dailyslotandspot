@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Project;
 use App\Worker;
+use Bestit\HipChat\Facade\HipChat;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Input;
 
@@ -15,52 +16,69 @@ class SlotAndSpot extends Controller
     public function addWorker()
     {
 
-        $worker = Worker::where('name',Input::get('workerName'))->first();
+        $worker = Worker::where('name', Input::get('workerName'))->first();
 
-        if(!$worker){
-            $worker  = new Worker(['name' => Input::get('workerName')]);
+        if (!$worker) {
+            $worker = new Worker([
+                'name' => Input::get('workerName'),
+                'email' => Input::get('workerEmail')
+            ]);
             $worker->save();
         }
 
-        $project = Project::where('name',Input::get('projectName'))->first();
+        return back();
+    }
 
-        if(!$project){
+    public function addProject()
+    {
+
+        $project = Project::where('name', Input::get('projectName'))->first();
+
+        if (!$project) {
             $project = new Project(['name' => Input::get('projectName')]);
             $project->save();
         }
 
-        if(!$worker->projects()->find($project->id)){
-            $worker->projects()->save($project);
-        }
-
         return back();
     }
 
-    public function addWorkerToProject($id) {
-
+    public function addWorkerToProject($id)
+    {
         $project = Project::find($id);
-
-        $worker = Worker::where('name',Input::get('workerName'))->first();
-
-        if(!$worker){
-            $worker  = new Worker(['name' => Input::get('workerName')]);
-            $worker->save();
-        }
-
-        if(!$worker->projects()->find($project->id)){
+        $worker = Worker::find(Input::get('workerName'));
+        if (!$worker->projects()->find($project->id)) {
             $worker->projects()->save($project);
+            HipChat::user($worker->email)->notify('Nerd We need your support for '.$project->name . ' Project!');
+        } else {
+            return back()
+                ->withErrors([
+                    'Allready exist' => 'Worker does not exist : ',
+                ], 'loginErrors');
         }
 
         return back();
-
     }
 
-    public function deleteProject( $id ){
+    public function deleteWorkerFromProject($id, $workerId)
+    {
+        $project = Project::find($id);
+        $worker = Worker::find($workerId);
+        if ($worker->projects()->find($project->id)) {
+            $worker->projects()->detach($project);
+            HipChat::user($worker->email)->notify('You have been kicked out form '.$project->name . ' Project!');
+        }
+
+        return back();
+    }
+
+    public function deleteProject($id)
+    {
         Project::find($id)->delete();
         return back();
     }
 
-    public function deleteWorker( $id ){
+    public function deleteWorker($id)
+    {
         Worker::find($id)->delete();
         return back();
     }
@@ -74,12 +92,14 @@ class SlotAndSpot extends Controller
 
         foreach ($projects as $project) {
             $workers = $project->workers;
-            $array = ['project' => $project->name,
+            $array = [
+                'project' => $project->name,
                 'position' => 0,
                 'workers' => [],
-                'conflict' => []];
+                'conflict' => []
+            ];
             foreach ($workers as $worker) {
-                $array['workers'][]= $worker->name;
+                $array['workers'][] = $worker->name;
             }
             $this->coll[] = $array;
         }
@@ -90,9 +110,9 @@ class SlotAndSpot extends Controller
 
         $this->coll = Collection::make($this->coll)->sortBy('position');
 
-        return view('SlotAndSpot',[
+        return view('SlotAndSpot', [
             'coll' => $this->coll,
-            'previousValue' =>  $this->coll->first()['position'],
+            'previousValue' => $this->coll->first()['position'],
         ]);
     }
 

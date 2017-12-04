@@ -34,8 +34,14 @@
 
             @if($spot < 3 && $previousValue === $project['position'])
                 <?php $spot++?>
-                <td data-toggle="modal" data-target="#myModal{{$index}}">{{$project['project']}}</td>
-                @include('modal', ['index' => $index, 'project' => $project])
+                <td>{{$project['project']}}
+                    <div class="modal-body">
+                        @foreach($project['workers'] as $worker)
+                            <strong>{{$worker}}</strong>
+                            <br>
+                        @endforeach
+                    </div>
+                </td>
             @else
                 <?php
                 $spot = 1;
@@ -45,8 +51,14 @@
                 </tr>
                 <tr>
                 <td>{{date('h:i', $endTime)}}</td>
-                <td data-toggle="modal" data-target="#myModal{{$index}}">{{$project['project']}}</td>
-                @include('modal', ['index' => $index, 'project' => $project])
+                <td>{{$project['project']}}
+                    <div class="modal-body">
+                        @foreach($project['workers'] as $worker)
+                            <strong>{{$worker}}</strong>
+                            <br>
+                        @endforeach
+                    </div>
+                </td>
             @endif
 
             <?php $previousValue = $project['position'] ?>

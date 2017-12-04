@@ -1,22 +1,39 @@
-html, body {
-    background-color: #fff;
-    color: #636b6f;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    height: 100vh;
-    margin: 0;
+.mtop {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.project-box {
+    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
+}
+.row {
+    margin-top: 10px;
+}
+.column {
+    margin-top: 10px;
+    float: left;
+    width: 33.3%;
+    margin-bottom: 16px;
+    padding: 0 8px;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+.container {
+    margin-top: 10px;
+    padding: 0 16px;
+    min-height: 120px;
+}
+
+.container::after, .row::after {
+    content: "";
+    clear: both;
+    display: table;
 }
 
 .content {
+    font-size: 12px !important;
     text-align: center;
-}
-
-.links > a {
-    color: #636b6f;
-    padding: 0 25px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .1rem;
-    text-decoration: none;
-    text-transform: uppercase;
 }
