@@ -17,17 +17,16 @@
     padding: 0 8px;
 }
 
-*, *:before, *:after {
-    box-sizing: inherit;
-}
-
-.container {
+.daily-container {
     margin-top: 10px;
-    padding: 0 16px;
     min-height: 120px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-.container::after, .row::after {
+.daily-container::after, .row::after {
     content: "";
     clear: both;
     display: table;

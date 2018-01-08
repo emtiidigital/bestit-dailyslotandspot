@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        Commands\SendMessage::class
     ];
 
     /**
@@ -24,8 +24,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        $schedule->command('bestit:send:workers_Message')
+                 ->wednesdays()
+                 ->everyTenMinutes()
+                 ->between('9:29', '11:00');
     }
 
     /**
