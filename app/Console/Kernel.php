@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('bestit:send:workers_Message')
-                 ->wednesdays()
+                 ->weekdays()
                  ->everyTenMinutes()
                  ->between('9:29', '11:00');
     }
