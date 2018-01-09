@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Commands\SendMessage::class
+        Commands\SendMessage::class,
+        Commands\ResetCounter::class
     ];
 
     /**
@@ -24,6 +25,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('bestit:reset:Reminder')
+            ->weekdays()
+            ->everyTenMinutes()
+            ->at('09:00');
+
         $schedule->command('bestit:send:workers_Message')
                  ->weekdays()
                  ->everyTenMinutes()

@@ -50,7 +50,7 @@ class SendMessage extends Command
 
         $filtered = $coll->where('position',$reminder->last_position);
         /** check if there are no any more project to reset the last position to 1 */
-        $reminder->last_position = !$filtered->isEmpty() ? $reminder->last_position + 1 : 1;
+        $reminder->last_position += 1;
         $reminder->save();
 
         /** Go through all project in the given position and send all workers a message*/
