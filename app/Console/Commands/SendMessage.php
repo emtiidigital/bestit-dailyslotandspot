@@ -57,7 +57,7 @@ class SendMessage extends Command
         foreach ($filtered->all() as $project){
             foreach ($project['workers'] as $worker){
                 $workerObject = Worker::where('name', $worker)->first();
-                HipChat::user($workerObject->email)->notify('MOVE MOVE MOVE ' . $project['project'] . ' Daily! (success)');
+                HipChat::user($workerObject->email)->notify('GO GO GO ' . $project['project'] . ' Daily! (success)', true);
             }
         }
     }

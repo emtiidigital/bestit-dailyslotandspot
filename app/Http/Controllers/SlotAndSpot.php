@@ -56,7 +56,7 @@ class SlotAndSpot extends Controller
         $worker = Worker::find(Input::get('workerName'));
         if (!$worker->projects()->find($project->id)) {
             $worker->projects()->save($project);
-            HipChat::user($worker->email)->notify('(jobs) Nerd We need your support for ' . $project->name . ' Project!');
+            HipChat::user($worker->email)->notify('(jobs) Nerd you have been assigned to the ' . $project->name . ' Project!', true);
         } else {
             return back()
                 ->withErrors([
@@ -78,7 +78,7 @@ class SlotAndSpot extends Controller
         $worker = Worker::find($workerId);
         if ($worker->projects()->find($project->id)) {
             $worker->projects()->detach($project);
-            HipChat::user($worker->email)->notify('You have been kicked out form ' . $project->name . ' Project! (facepalm)');
+            HipChat::user($worker->email)->notify('You have been kicked out from ' . $project->name . ' Project! (facepalm)', true);
         }
 
         return back();
