@@ -9,8 +9,8 @@ class Worker extends Model
     protected $table = 'workers';
     protected $fillable = ['name', 'email'];
 
-    public function projects() {
+    public function projects()
+    {
         return $this->belongsToMany('App\Project');
     }
-
 }
