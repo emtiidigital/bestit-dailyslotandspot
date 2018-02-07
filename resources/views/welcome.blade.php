@@ -33,41 +33,44 @@
         </div>
 
         <br>
-        <div class="row">
+        <div class="projects">
             @foreach (\App\Project::all() as $project)
-                <div class="project-box daily-container column">
+                <div class="project-box daily-container">
                     <div class="row justify-content-around">
-                        <h1>
-                            <a href="{{ url('project/'.$project->id.'/delete') }}">
-                                <span class=" glyphicon glyphicon-trash text-danger"></span>
-                            </a>
-                            {{$project->name}}
-                        </h1>
-                        <form method="Post" action="{{ url($project->id.'/addWorker') }}">
-                            {{ csrf_field() }}
-
-                            <select class="custom-select" name="workerName">
-                                <option value="undefind">choose worker</option>
-                                @foreach($workers as $worker)
-
-                                    <option value="{{$worker->id}}">{{$worker->name}}</option>
-                                @endforeach
-                            </select>
-
-                            <button class="btn btn-primary" type="submit"> add worker</button>
-
-                        </form>
-                    </div>
-
-                    @foreach($project->workers as $worker)
                         <div>
-                            {{$worker->name}}
-                            <a href="{{ url($project->id.'/deleteWorker/'.$worker->id) }}">
-                                <span class="badge badge-default badge-pill">x</span>
-                            </a>
+                            <h1>
+                                <a href="{{ url('project/'.$project->id.'/delete') }}">
+                                    <span class="fa fa-trash text-danger"></span>
+                                </a>
+                                {{$project->name}}
+                            </h1>
                         </div>
-                    @endforeach
+                        <div>
+                            <form method="Post" action="{{ url($project->id.'/addWorker') }}">
+                                {{ csrf_field() }}
 
+                                <select class="custom-select" name="workerName">
+                                    <option value="undefind">choose worker</option>
+                                    @foreach($workers as $worker)
+                                        <option value="{{$worker->id}}">{{$worker->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <button class="btn btn-primary" type="submit"> add worker</button>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="workers">
+                        @foreach($project->workers as $worker)
+                            <div class="worker-name">
+                                <span class="name">{{$worker->name}}</span>
+                                <a class="delete-icon" href="{{ url($project->id.'/deleteWorker/'.$worker->id) }}">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
             @endforeach
         </div>

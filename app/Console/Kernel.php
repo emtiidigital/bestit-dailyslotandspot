@@ -33,7 +33,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('bestit:send:workers_Message')
                  ->weekdays()
                  ->everyTenMinutes()
-                 ->between('8:29', '09:30');
+                 ->between('8:19', '09:30');
     }
 
     /**
