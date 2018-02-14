@@ -27,7 +27,6 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('bestit:reset:Reminder')
             ->weekdays()
-            ->everyTenMinutes()
             ->at('08:00');
 
         $schedule->command('bestit:send:workers_Message')
