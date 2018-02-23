@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helper\FindSlots;
+use App\Worker;
 
 class DashboardController extends Controller
 {
@@ -16,16 +17,15 @@ class DashboardController extends Controller
         $findSlots = new FindSlots();
         $coll = $findSlots->getSlotAndSpot();
 
-        return view('dashboard', [
+        return view('slotAndSpot', [
             'coll' => $coll,
             'previousValue' => $coll->first()['position'],
         ]);
     }
 
     public function slotAndSpot(){
-        $workers = \App\Worker::all(['id', 'name']);
-        return view('welcome', [
-            'workers' => $workers
-        ]);
+        $employees = Worker::all(['id', 'name']);
+
+        return view('dashboard', compact('employees'));
     }
 }

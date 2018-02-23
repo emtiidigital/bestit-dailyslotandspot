@@ -146,4 +146,18 @@ class ProjectsController extends Controller
 
         return back();
     }
+
+    /**
+     * Send Hipchat Message to all projects members
+     * @param Request $request
+     * @param $id
+     */
+    public function sendMessage(Request $request, $id)
+    {
+        $project = Project::find($id);
+
+        foreach ($project->workers as $employee){
+            HipChat::user($employee->email)->notify($project->name.': '. $request->message);
+        }
+    }
 }
