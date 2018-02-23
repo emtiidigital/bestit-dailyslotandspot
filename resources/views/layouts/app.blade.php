@@ -22,11 +22,17 @@
 <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/home') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
             <a class="navbar-brand" href="{{ url('/') }}">
+                DailySlotAndSpot
+            </a>
+            <a class="navbar-brand" href="{{ url('/slotandspot') }}">
                 Dashboard
+            </a>
+            <a class="navbar-brand" href="{{ url('/projects') }}">
+                Projects
+            </a>
+            <a class="navbar-brand" href="{{ url('/employees') }}">
+                Employees
             </a>
             <a class="navbar-brand" href="{{ url('/dailySpotAndSlot') }}">
                 Daily Slots

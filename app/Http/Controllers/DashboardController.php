@@ -22,4 +22,8 @@ class DashboardController extends Controller
             'previousValue' => $coll->first()['position'],
         ]);
     }
+
+    public function slotAndSpot(){
+        return view('welcome');
+    }
 }

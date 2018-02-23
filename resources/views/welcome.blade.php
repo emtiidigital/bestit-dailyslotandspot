@@ -13,26 +13,6 @@
             </div>
         @endif
 
-        <div class="row border justify-content-center mtop">
-            <div class="mtop col-4">
-                <form action="{{ url('/addWorker') }}" method="post">
-                    {{ csrf_field() }}
-                    Worker name: <input type="text" name="workerName"><br><br>
-                    Worker email: <input type="text" name="workerEmail"><br><br>
-                    <input class="btn btn-primary" type="submit" value="add new Worker">
-                </form>
-            </div>
-            <div class="mtop col-4">
-                <form action="{{ url('/addProject') }}" method="post">
-                    {{ csrf_field() }}
-                    project name:
-                    <input type="text" name="projectName"><br><br>
-                    <input class="btn btn-primary" type="submit" value="Create Project">
-                </form>
-            </div>
-        </div>
-
-        <br>
         <div class="row">
             @foreach (\App\Project::all() as $project)
                 <div class="project-box daily-container column">
