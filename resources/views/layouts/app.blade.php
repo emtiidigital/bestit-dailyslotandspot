@@ -10,17 +10,16 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('css/home.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
     <!-- bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script type="text/javascript" src="{{ asset('js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('js/filter.js') }}"></script>
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="{{ url('/home') }}">
                 {{ config('app.name', 'Laravel') }}
@@ -43,7 +42,8 @@
                         <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
                     @else
                         <li class="nav-item dropdown">
-                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                            <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink"
+                               data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
                                 {{ Auth::user()->name }}
                             </a>
