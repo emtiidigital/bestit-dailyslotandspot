@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helper\FindSlots;
-use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
@@ -24,6 +23,9 @@ class DashboardController extends Controller
     }
 
     public function slotAndSpot(){
-        return view('welcome');
+        $workers = \App\Worker::all(['id', 'name']);
+        return view('welcome', [
+            'workers' => $workers
+        ]);
     }
 }

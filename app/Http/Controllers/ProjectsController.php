@@ -112,7 +112,7 @@ class ProjectsController extends Controller
     public function addEmployee(Request $request, $id)
     {
         $project = Project::find($id);
-        $employee = Worker::find($request->id);
+        $employee = Worker::find($request->workerName);
         if (!$employee->projects()->find($project->id)) {
             $employee->projects()->save($project);
             HipChat::user($employee->email)->notify('(jobs) Nerd We need your support for ' . $project->name . ' Project!');
@@ -129,14 +129,16 @@ class ProjectsController extends Controller
     /**
      * Add Employee to the specified project.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param $projectId
+     * @param $employeeId
      * @return \Illuminate\Http\Response
+     * @internal param Request $request
+     * @internal param int $id
      */
-    public function deleteEmployee(Request $request, $id)
+    public function deleteEmployee($projectId, $employeeId)
     {
-        $project = Project::find($id);
-        $employee = Worker::find($request->id);
+        $project = Project::find($projectId);
+        $employee = Worker::find($employeeId);
         if ($employee->projects()->find($project->id)) {
             $employee->projects()->detach($project);
             HipChat::user($employee->email)->notify('You have been kicked out form ' . $project->name . ' Project! (facepalm)');

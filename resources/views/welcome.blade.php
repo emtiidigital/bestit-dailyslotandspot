@@ -13,41 +13,53 @@
             </div>
         @endif
 
-        <div class="row">
+        <div class="projects">
             @foreach (\App\Project::all() as $project)
-                <div class="project-box daily-container column">
-                    <div class="row justify-content-around">
-                        <h1>
-                            <a href="{{ url('project/'.$project->id.'/delete') }}">
-                                <span class=" glyphicon glyphicon-trash text-danger"></span>
-                            </a>
-                            {{$project->name}}
-                        </h1>
-                        <form method="Post" action="{{ url($project->id.'/addWorker') }}">
-                            {{ csrf_field() }}
-
-                            <select class="custom-select" name="workerName">
-                                <option value="undefind">choose worker</option>
-                                @foreach($workers as $worker)
-
-                                    <option value="{{$worker->id}}">{{$worker->name}}</option>
-                                @endforeach
-                            </select>
-
-                            <button class="btn btn-primary" type="submit"> add worker</button>
-
-                        </form>
-                    </div>
-
-                    @foreach($project->workers as $worker)
-                        <div>
-                            {{$worker->name}}
-                            <a href="{{ url($project->id.'/deleteWorker/'.$worker->id) }}">
-                                <span class="badge badge-default badge-pill">x</span>
-                            </a>
+                <div class="project-box daily-container">
+                    <div class="daily-container-inner">
+                        <div class="project-image">
+                            <img src="{{ url('images/logo.png') }}" alt="{{$project->name}}"/>
                         </div>
-                    @endforeach
+                        <div class="row justify-content-around project-box-headline">
+                            <h1>
+                                <div class="project-name">
+                                    {{$project->name}}
+                                </div>
+                                <div class="project-delete">
+                                    <form action="{{ route('projects.destroy', [$project->id]) }}" method="POST">
+                                        <input type="hidden" name="_method" value="DELETE">
+                                        <span class="fa fa-trash project-delete-icon"></span>
+                                    </form>
+                                </div>
+                            </h1>
+                        </div>
+                        <div class="workers">
+                            @foreach($project->workers as $worker)
+                                <div class="worker-name">
+                                    <span class="name">{{$worker->name}}</span>
+                                    <a class="delete-icon"
+                                       href="{{ route('projects.deleteEmployee', [$project->id, $worker->id]) }}">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="worker-select-box">
+                            <form method="Post" action="{{ route('projects.addEmployee', [$project->id]) }}">
+                                {{ csrf_field() }}
 
+                                <select class="custom-select" name="workerName">
+                                    <option value="undefind">choose worker</option>
+                                    @foreach($workers as $worker)
+                                        <option value="{{$worker->id}}">{{$worker->name}}</option>
+                                    @endforeach
+                                </select>
+
+                                <button class="btn btn-primary" type="submit"> add worker</button>
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
             @endforeach
         </div>

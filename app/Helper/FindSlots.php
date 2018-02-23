@@ -7,14 +7,16 @@ use Illuminate\Support\Collection;
 
 /**
  * Created by PhpStorm.
- * User: senan
+ * User: SenanSharhan
  * Date: 05.01.18
  * Time: 16:43
  */
 class FindSlots
 {
-    /** @var array */
-    private $coll = [];
+    /** @var array $allProjects */
+    private $allProjects = [];
+    /** @var array $sortedProjects */
+    private $sortedProjects = [];
 
     /**
      * Get all projects and find the best order for the daily slots
@@ -26,101 +28,76 @@ class FindSlots
 
         foreach ($projects as $project) {
             $workers = $project->workers;
-            $array = [
+            $allProjects = [
                 'project' => $project->name,
                 'position' => 0,
-                'workers' => [],
+                'workers' => $workers->pluck('name')->toArray(),
                 'conflict' => []
             ];
-            foreach ($workers as $worker) {
-                $array['workers'][] = $worker->name;
-            }
-            $this->coll[] = $array;
+
+            $this->allProjects[] = $allProjects;
         }
 
-        $this->findConflicts($this->coll);
-        $this->findSlot($this->coll);
+        $this->findConflicts($this->allProjects);
+        $this->findSlot($this->allProjects);
 
-        return Collection::make($this->coll)->sortBy('position');
+        return Collection::make($this->sortedProjects)->sortBy('position');
     }
 
     /**
      * This function finds all conflicts between the projects and save a new entry
      * to the conflict attribute.
-     * @param $array
+     * @param array $allProjects
      */
-    public function findConflicts(array $array)
+    public function findConflicts(array $allProjects)
     {
-        $count = count($array);
+
+        $count = count($allProjects);
 
         for ($j = 0; $j < $count; $j++) {
 
             for ($i = $j + 1; $i < $count; $i++) {
 
-                $result = !empty(array_intersect($array[$j]["workers"], $array[$i]["workers"]));
+                $result = !empty(array_intersect($allProjects[$j]['workers'], $allProjects[$i]['workers']));
 
                 if ($result) {
-                    $array[$j]["conflict"][] = $array[$i]["project"];
-                    $array[$i]["conflict"][] = $array[$j]["project"];
+                    $allProjects[$j]['conflict'][] = $allProjects[$i]['project'];
+                    $allProjects[$i]['conflict'][] = $allProjects[$j]['project'];
                 }
             }
         }
 
-        $this->coll = $array;
+        $this->allProjects = $allProjects;
     }
 
     /**
      * This function iterates through the projects list and finds the best slot
      * by taking into consideration the conflicts with other projects
-     * @param $array
+     * @param $allProjects
      */
-    public function findSlot(array $array)
+    public function findSlot(array $allProjects)
     {
-        $count = count($array);
+        foreach ($allProjects as $key => $projectToAdd) {
 
-        for ($j = 0; $j < $count; $j++) {
-
-            if (!empty($array[$j]["conflict"])) {
-
-                $array[$j]["position"] = 1;
-
-                $conflictCount = count($array[$j]["conflict"]);
-
-                for ($i = 0; $i < $conflictCount; $i++) {
-
-                    $value = $array[$j]["conflict"][$i];
-
-                    for ($x = 0; $x < $count; $x++) {
-
-                        if ($array[$x]['project'] === $value) {
-
-                            if ($array[$j]["position"] === $array[$x]['position']) {
-                                $array[$j]["position"] = $array[$j]["position"] + 1;
-                            }
-
-                            if ($array[$j]["position"] < $array[$x]['position']) {
-
-                                if ($array[$x]['position'] == count($array[$j]["conflict"]) + 1) {
-
-                                    if (count($array[$j]["conflict"]) - 1 == 0) {
-                                        $array[$j]["position"] = 1;
-                                    } else {
-                                        $array[$j]["position"] = count($array[$j]["conflict"]) - 1;
-                                    }
-
-                                } else {
-                                    $array[$j]["position"] = count($array[$j]["conflict"]) + 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
+            if ($key === 0) {
+                $this->sortedProjects[] = $projectToAdd;
             } else {
-                $array[$j]["position"] = 1;
+                $this->findPosition($projectToAdd);
             }
-
         }
-        $this->coll = $array;
+    }
+
+    /**
+     * @param $projectToAdd
+     */
+    public function findPosition(array $projectToAdd)
+    {
+        foreach ($this->sortedProjects as $project) {
+            if (in_array($projectToAdd['project'], $project['conflict'], true)) {
+                $projectToAdd['position'] = $project['position'] + 1;
+            }
+        }
+
+        $this->sortedProjects[] = $projectToAdd;
     }
 }
