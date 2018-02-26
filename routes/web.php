@@ -1,51 +1,28 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
-Route::get('/', function () {
-   $workers = \App\Worker::all(['id', 'name']);
-    return view('welcome', [
-        'workers' => $workers
-    ]);
-})->middleware('auth');
-
-Route::post('/addWorker', 'SlotAndSpot@addWorker')->middleware('auth');
-Route::post('/addProject', 'SlotAndSpot@addProject')->middleware('auth');
-Route::get('worker/{id}/delete', 'SlotAndSpot@deleteWorker')->middleware('auth');
-
-Route::get('project/{id}/delete', 'SlotAndSpot@deleteProject')->middleware('auth');
-Route::post('{id}/addWorker', 'SlotAndSpot@addWorkerToProject')->middleware('auth');
-Route::get('{id}/deleteWorker/{workerId}', 'SlotAndSpot@deleteWorkerFromProject')->middleware('auth');
-
-Route::get('/dailySpotAndSlot', 'SlotAndSpot@dailySpotAndSlot');
-
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-
 // Authentication Routes...
-Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('login', 'Auth\LoginController@login');
-Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Auth::routes();
 
-// Registration Routes...
-Route::get('register', 'HomeController@index')->name('register');
-Route::post('register', 'HomeController@index');
+Route::get('/', 'DashboardController@index');
+Route::get('/slotandspot', 'DashboardController@slotAndSpot')->middleware('auth');
 
-// Password Reset Routes...
-Route::get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+Route::get('employees', 'EmployeesController@index')->name('employees.index')->middleware('auth');
+Route::get('employees/create', 'EmployeesController@create')->name('employees.create')->middleware('auth');
+Route::post('employees', 'EmployeesController@store')->name('employees.store')->middleware('auth');
+Route::get('employees/{employee}', 'EmployeesController@edit')->name('employees.edit')->middleware('auth');
+Route::patch('employees/{employee}', 'EmployeesController@update')->name('employees.update')->middleware('auth');
+Route::delete('employees/{employee}', 'EmployeesController@destroy')->name('employees.destroy')->middleware('auth');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('projects', 'ProjectsController@index')->name('projects.index')->middleware('auth');
+Route::get('projects/create', 'ProjectsController@create')->name('projects.create')->middleware('auth');
+Route::post('projects', 'ProjectsController@store')->name('projects.store')->middleware('auth');
+Route::get('projects/{project}', 'ProjectsController@edit')->name('projects.edit')->middleware('auth');
+Route::patch('projects/{project}', 'ProjectsController@update')->name('projects.update')->middleware('auth');
+Route::delete('projects/{project}', 'ProjectsController@destroy')->name('projects.destroy')->middleware('auth');
+Route::post('addEmployee/{project}', 'ProjectsController@addEmployee')->name('projects.addEmployee')->middleware('auth');
+Route::get('deleteEmployee/{project}/{employee}', 'ProjectsController@deleteEmployee')->name('projects.deleteEmployee')->middleware('auth');
+Route::post('sendMessage/{project}', 'ProjectsController@sendMessage')->name('projects.sendMessage')->middleware('auth');
 
+// Disable Registration Routes...
+Route::get('register', 'DashboardController@index')->name('register');
+Route::post('register', 'DashboardController@index');

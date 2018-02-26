@@ -17,7 +17,7 @@ class CreateWorkersTable extends Migration
             $table->increments('id');
             $table->timestamps();
             $table->text('name');
-            $table->text('email');
+            $table->text('email')->unique();
         });
     }
 
