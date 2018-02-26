@@ -1,22 +1,113 @@
-html, body {
-    background-color: #fff;
-    color: #636b6f;
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
-    height: 100vh;
-    margin: 0;
+.mtop {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.project-box {
+    box-shadow: 4px 4px 8px 4px rgba(0, 0, 0, 0.2);
+}
+
+.daily-container {
+    width: calc(100% / 3 - 20px);
+    margin: 10px;
+    padding: 10px;
+}
+
+.daily-container-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-bottom: 40px;
 }
 
 .content {
+    font-size: 14px;
     text-align: center;
 }
 
-.links > a {
-    color: #636b6f;
-    padding: 0 25px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .1rem;
-    text-decoration: none;
-    text-transform: uppercase;
+.projects {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.worker-name {
+    display: flex;
+    justify-content: space-between;
+}
+
+.name {
+    margin-left: 10px;
+}
+
+.delete-icon {
+    margin-right: 10px;
+    color: #000;
+}
+
+.project-box-headline {
+    margin: 0;
+    display: inline-block;
+    width: 100%;
+}
+
+.project-name {
+    display: inline-block;
+    text-align: left;
+    width: calc(100% - 28px - 10px);
+    padding-right: 10px;
+}
+
+.project-delete {
+    display: inline-block;
+    text-align: right;
+    width: 28px;
+    position: relative;
+    vertical-align: top;
+}
+
+.worker-select-box {
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+}
+
+.navbar-dark {
+    background: #000;
+}
+
+.navbar-brand {
+    color: #fff;
+}
+
+.project-delete-icon {
+    color: #fd7e14;
+}
+
+.workers {
+    position: relative;
+    height: auto;
+}
+
+.btn.btn-primary {
+    background: #000;
+    border-color: #000;
+}
+
+.project-image {
+    position: relative;
+    height: 75px;
+    width: 100%;
+}
+
+.project-image img{
+    max-height: 100%;
+    max-width: 100%;
+    margin: auto;
+    border-radius: 50%;
+}
+
+.custom-select {
+    height: calc(3.15rem + 2px);
+    line-height: 1.5;
 }
