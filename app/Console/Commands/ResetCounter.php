@@ -39,7 +39,7 @@ class ResetCounter extends Command
     public function handle()
     {
         $reminder = Reminder::find(1);
-        $reminder->last_position = 1;
+        $reminder->last_position = 0;
         $reminder->save();
     }
 }

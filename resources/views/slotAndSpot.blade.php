@@ -20,10 +20,10 @@
 
         <?php
         $spot = 0;
-        $selectedTime = '09:30';
+        $selectedTime = '09:20';
         ?>
         <tr>
-            <td>09:30</td>
+            <td>09:20</td>
             @foreach($coll as $index => $project)
 
                 @if($spot < 3 && $previousValue === $project['position'])
