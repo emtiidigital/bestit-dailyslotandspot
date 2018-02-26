@@ -25,7 +25,6 @@ class FindSlots
     public function getSlotAndSpot(): Collection
     {
         $projects = Project::all();
-
         foreach ($projects as $project) {
             $workers = $project->workers;
             $allProjects = [
@@ -34,13 +33,10 @@ class FindSlots
                 'workers' => $workers->pluck('name')->toArray(),
                 'conflict' => []
             ];
-
             $this->allProjects[] = $allProjects;
         }
-
         $this->findConflicts($this->allProjects);
         $this->findSlot($this->allProjects);
-
         return Collection::make($this->sortedProjects)->sortBy('position');
     }
 
@@ -51,22 +47,16 @@ class FindSlots
      */
     public function findConflicts(array $allProjects)
     {
-
         $count = count($allProjects);
-
         for ($j = 0; $j < $count; $j++) {
-
             for ($i = $j + 1; $i < $count; $i++) {
-
                 $result = !empty(array_intersect($allProjects[$j]['workers'], $allProjects[$i]['workers']));
-
                 if ($result) {
                     $allProjects[$j]['conflict'][] = $allProjects[$i]['project'];
                     $allProjects[$i]['conflict'][] = $allProjects[$j]['project'];
                 }
             }
         }
-
         $this->allProjects = $allProjects;
     }
 
@@ -78,7 +68,6 @@ class FindSlots
     public function findSlot(array $allProjects)
     {
         foreach ($allProjects as $key => $projectToAdd) {
-
             if ($key === 0) {
                 $this->sortedProjects[] = $projectToAdd;
             } else {
@@ -94,10 +83,9 @@ class FindSlots
     {
         foreach ($this->sortedProjects as $project) {
             if (in_array($projectToAdd['project'], $project['conflict'], true)) {
-                $projectToAdd['position'] = $project['position'] + 1;
+                $projectToAdd['position'] = max($projectToAdd['position'], $project['position'] + 1);
             }
         }
-
         $this->sortedProjects[] = $projectToAdd;
     }
 }

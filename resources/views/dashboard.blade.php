@@ -59,48 +59,6 @@
 
                             </form>
                         </div>
-
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                            Send Message to the Team
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Send Message to the Team</h4>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        {{ Form::open(['class' => 'form-horizontal', 'route' => ['projects.sendMessage',$project->id]]) }}
-                                        {!! method_field('POST') !!}
-                                        <div class="form-group{{ $errors->has('message') ? ' has-error' : '' }}">
-                                            {{ Form::label('message', 'Message', ['class' => 'col-md-4 control-label']) }}
-
-                                            <div class="col-md-6">
-                                                {{ Form::textarea('message', old('message'), ['required', 'autofocus', 'class' => 'form-control', 'placeholder' => 'write your Message here ...']) }}
-                                                @if ($errors->has('message'))
-                                                    <span class="help-block">
-                                            <strong>{{ $errors->first('message') }}</strong>
-                                        </span>
-                                                @endif
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="col-md-8 col-md-offset-4">
-                                                {{ Form::submit('Send', ['class' => 'btn btn-primary']) }}
-                                            </div>
-                                        </div>
-                                        {{ Form::close() }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             @endforeach
