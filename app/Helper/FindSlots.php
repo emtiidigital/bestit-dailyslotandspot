@@ -27,13 +27,17 @@ class FindSlots
         $projects = Project::all();
         foreach ($projects as $project) {
             $workers = $project->workers;
-            $allProjects = [
-                'project' => $project->name,
-                'position' => 0,
-                'workers' => $workers->pluck('name')->toArray(),
-                'conflict' => []
-            ];
-            $this->allProjects[] = $allProjects;
+
+            if (count($workers) > 0) {
+                $allProjects = [
+                    'project' => $project->name,
+                    'position' => 0,
+                    'workers' => $workers->pluck('name')->toArray(),
+                    'conflict' => []
+                ];
+                $this->allProjects[] = $allProjects;
+            }
+            
         }
         $this->findConflicts($this->allProjects);
         $this->findSlot($this->allProjects);
