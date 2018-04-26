@@ -16,6 +16,10 @@ class CreateRemindersTable extends Migration
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('last_position');
+            $table->integer('max_spots');
+            $table->time('beginning_time');
+            $table->time('end_time');
+            $table->integer('hip_chat');
         });
     }
 

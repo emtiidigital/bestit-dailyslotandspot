@@ -23,6 +23,11 @@ Route::post('addEmployee/{project}', 'ProjectsController@addEmployee')->name('pr
 Route::get('deleteEmployee/{project}/{employee}', 'ProjectsController@deleteEmployee')->name('projects.deleteEmployee')->middleware('auth');
 Route::post('sendMessage/{project}', 'ProjectsController@sendMessage')->name('projects.sendMessage')->middleware('auth');
 
+
+Route::get('config', 'ConfigController@index')->name('config.index')->middleware('auth');
+Route::patch('config/{id}', 'ConfigController@update')->name('config.update')->middleware('auth');
+
+
 // Disable Registration Routes...
 Route::get('register', 'DashboardController@index')->name('register');
 Route::post('register', 'DashboardController@index');

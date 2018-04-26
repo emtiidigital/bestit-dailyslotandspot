@@ -14,6 +14,10 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('reminders')->insert([
             'last_position' => 0,
+            'max_spots' => 5,
+            'beginning_time' => \Carbon\Carbon::createFromFormat('H:i', '9:10'),
+            'end_time' => \Carbon\Carbon::createFromFormat('H:i', '10:30'),
+            'hip_chat' => 1
         ]);
 
         /** Name, email, password should be changed */

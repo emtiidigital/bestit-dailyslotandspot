@@ -6,13 +6,17 @@
 
         <input id="filter" type="text" class="form-control" placeholder="Type here...">
     </div>
+    <?php
+    $reminder = \App\Reminder::find(1);
+    $maxSpots = $reminder->max_spots;
+    ?>
     <table class="table table-striped">
         <thead>
         <tr>
             <th>Time</th>
-            <th>Spot 1</th>
-            <th>Spot 2</th>
-            <th>Spot 3</th>
+            @for ($i = 0; $i < $maxSpots; $i++)
+                <th>Spot {{$i+1}}</th>
+            @endfor
         </tr>
         </thead>
 
@@ -20,13 +24,13 @@
 
         <?php
         $spot = 0;
-        $selectedTime = '09:10';
+        $selectedTime = $reminder->beginning_time;
         ?>
         <tr>
-            <td>09:10</td>
+            <td>{{ Carbon\Carbon::parse($reminder->beginning_time)->format('H:i') }}</td>
             @foreach($coll as $index => $project)
 
-                @if($spot < 3 && $previousValue === $project['position'])
+                @if($spot < $maxSpots && $previousValue === $project['position'])
                     <?php $spot++?>
                     <td>{{$project['project']}}
                         <div class="modal-body">
@@ -39,12 +43,12 @@
                 @else
                     <?php
                     $spot = 1;
-                    $endTime = strtotime('+10 minutes', strtotime($selectedTime));
-                    $selectedTime = date('h:i', $endTime);
+                    $endTime = Carbon\Carbon::parse($selectedTime)->addMinutes(10)->format('H:i');
+                    $selectedTime = $endTime;
                     ?>
         </tr>
         <tr>
-            <td>{{date('h:i', $endTime)}}</td>
+            <td>{{$endTime}}</td>
             <td>{{$project['project']}}
                 <div class="modal-body">
                     @foreach($project['workers'] as $worker)

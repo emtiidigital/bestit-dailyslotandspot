@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Schema;
 
 class Kernel extends ConsoleKernel
 {
@@ -20,19 +22,26 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param  \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('bestit:reset:Reminder')
-            ->weekdays()
-            ->at('08:00');
+        //TODO: fix
+/*        if (Schema::hasTable('reminders')) {
+            $reminder = \App\Reminder::find(1);
+            $resetTime = Carbon::parse($reminder->beginning_time)->subHour()->format('H:i');
+            $beginningTime = Carbon::parse($reminder->beginning_time)->subMinutes($reminder->hip_chat)->format('H:i');
 
-        $schedule->command('bestit:send:workers_Message')
-                 ->weekdays()
-                 ->everyTenMinutes()
-                 ->between('9:09', '10:30');
+            $schedule->command('bestit:reset:Reminder')
+                ->weekdays()
+                ->at($resetTime);
+
+            $schedule->command('bestit:send:workers_Message')
+                ->weekdays()
+                ->everyTenMinutes()
+                ->between($beginningTime, $reminder->end_time);
+        }*/
     }
 
     /**
