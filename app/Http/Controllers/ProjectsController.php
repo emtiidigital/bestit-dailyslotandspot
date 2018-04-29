@@ -16,7 +16,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::all(['id', 'name']);
+        $projects = Project::all(['id', 'name', 'room']);
 
         return view('projects.index', compact('projects'));
     }
@@ -40,8 +40,8 @@ class ProjectsController extends Controller
     public function store(Request $request)
     {
         $project = new Project;
-
         $project->name = $request->name;
+        $project->room = $request->room;
         $project->save();
 
         return back();
@@ -83,6 +83,7 @@ class ProjectsController extends Controller
         $project = Project::find($id);
 
         $project->name = $request->name;
+        $project->room = $request->room;
 
         $project->save();
 
@@ -94,6 +95,7 @@ class ProjectsController extends Controller
      *
      * @param  int $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function destroy($id)
     {
@@ -106,8 +108,9 @@ class ProjectsController extends Controller
      * Add Employee to the specified project.
      *
      * @param  \Illuminate\Http\Request $request
-     * @param  int $id
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
     public function addEmployee(Request $request, $id)
     {
@@ -134,6 +137,7 @@ class ProjectsController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param Request $request
      * @internal param int $id
+     * @throws \Exception
      */
     public function deleteEmployee($projectId, $employeeId)
     {
@@ -150,14 +154,17 @@ class ProjectsController extends Controller
     /**
      * Send Hipchat Message to all projects members
      * @param Request $request
-     * @param $id
+     * @param         $projectName
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function sendMessage(Request $request, $id)
+    public function sendMessage(Request $request, $projectName)
     {
-        $project = Project::find($id);
+        $project = Project::where('name', $projectName)->first();
 
         foreach ($project->workers as $employee){
-            HipChat::user($employee->email)->notify($project->name.': '. $request->message);
+            HipChat::user($employee->email)->notify($project->name.' Project: '. $request->message);
         }
+        return back();
     }
 }

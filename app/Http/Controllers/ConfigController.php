@@ -73,6 +73,7 @@ class ConfigController extends Controller
         $config = Reminder::find($id);
         $config->max_spots = $request->max_spots;
         $config->beginning_time = $request->beginning_time;
+        $config->end_time = $request->end_time;
         $config->hip_chat = $request->hip_chat;
 
         $config->save();

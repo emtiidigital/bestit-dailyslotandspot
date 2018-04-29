@@ -16,7 +16,6 @@ class CreateWorkerProjectsTable extends Migration
         Schema::create('project_worker', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->timestamps();
 
             $table->integer('project_id')->unsigned();
             $table->integer('worker_id')->unsigned();

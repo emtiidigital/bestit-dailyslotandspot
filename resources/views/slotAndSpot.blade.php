@@ -32,12 +32,16 @@
 
                 @if($spot < $maxSpots && $previousValue === $project['position'])
                     <?php $spot++?>
-                    <td>{{$project['project']}}
+                    <td>{{$project['project']}} ({{$project['room']}})
                         <div class="modal-body">
                             @foreach($project['workers'] as $worker)
                                 <strong>{{$worker}}</strong>
                                 <br>
                             @endforeach
+                            @auth
+                                @include('Hipchat.message',['project' => $project['project']])
+                            @endauth
+
                         </div>
                     </td>
                 @else

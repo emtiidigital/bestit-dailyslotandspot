@@ -27,21 +27,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        //TODO: fix
-/*        if (Schema::hasTable('reminders')) {
-            $reminder = \App\Reminder::find(1);
-            $resetTime = Carbon::parse($reminder->beginning_time)->subHour()->format('H:i');
-            $beginningTime = Carbon::parse($reminder->beginning_time)->subMinutes($reminder->hip_chat)->format('H:i');
+        $schedule->command('bestit:reset:Reminder')
+            ->daily()
+            ->at('03:00');
 
-            $schedule->command('bestit:reset:Reminder')
-                ->weekdays()
-                ->at($resetTime);
+        $schedule->command('bestit:send:workers_Message')
+            ->weekdays()
+            ->everyMinute();
 
-            $schedule->command('bestit:send:workers_Message')
-                ->weekdays()
-                ->everyTenMinutes()
-                ->between($beginningTime, $reminder->end_time);
-        }*/
     }
 
     /**

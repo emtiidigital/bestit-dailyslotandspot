@@ -23,7 +23,7 @@
                         <div class="row justify-content-around project-box-headline">
                             <h1>
                                 <div class="project-name">
-                                    {{$project->name}}
+                                    {{$project->name}} <span style="font-size: small">({{$project->room}})</span>
                                 </div>
                                 <div class="project-delete">
                                     <form action="{{ route('projects.destroy', [$project->id]) }}" method="POST">

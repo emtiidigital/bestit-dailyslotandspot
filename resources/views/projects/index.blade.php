@@ -9,12 +9,14 @@
             <thead>
             <tr>
                 <th>Name</th>
+                <th>Room</th>
             </tr>
             </thead>
             <tbody>
             @forelse($projects as $project)
                 <tr>
                     <td>{{ $project->name }}</td>
+                    <td>{{ $project->room }}</td>
                     <td>
                         {{ Form::open([
                        'route' => ['projects.edit', $project->id],

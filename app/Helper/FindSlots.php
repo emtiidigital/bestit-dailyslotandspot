@@ -31,6 +31,7 @@ class FindSlots
             if (count($workers) > 0) {
                 $allProjects = [
                     'project' => $project->name,
+                    'room' => $project->room,
                     'position' => 0,
                     'workers' => $workers->pluck('name')->toArray(),
                     'conflict' => []
